@@ -4,6 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
@@ -31,6 +32,8 @@ public class Menu {
     private String background;
 
     @NotEmpty(message = "Logo is Required")
+    @NotNull(message = "Logo can not be null")
+    @Column(length = 400)
     private String brandLogo;
 
     @Column(updatable = false)

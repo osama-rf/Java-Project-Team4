@@ -57,8 +57,6 @@ public class Category {
         this.updatedAt = new Date();
     }
 
-    private String image;
-
     public String getName_en() {
         return name_en;
     }
@@ -73,14 +71,6 @@ public class Category {
 
     public void setName_ar(String name_ar) {
         this.name_ar = name_ar;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public long getId() {

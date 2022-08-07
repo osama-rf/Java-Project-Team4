@@ -24,21 +24,24 @@ public class Item {
     @NotEmpty(message = "Name is required")
     private String name_ar;
 
-    @Column(length = 3000)
+    @Column(length = 3000 , nullable = true)
     private String description_en;
 
-    @Column(length = 3000)
+    @Column(length = 3000 , nullable = true)
     private String description_ar;
 
     @NotEmpty(message = "Price is required")
     private double price;
 
+    @Column(nullable = true)
     private double discountPrice;
 
+    @Column(nullable = true)
     private String promo_en;
-
+    @Column(nullable = true)
     private String promo_ar;
 
+    @NotEmpty(message = "Image is required")
     private String image;
 
     @Column(updatable = false)
