@@ -21,23 +21,24 @@ public class User {
     private long id;
 
     @NotEmpty(message = "First Name is required")
-    @Size(min = 3 , max = 64, message="First Name Must be at least 3 characters")
+    @Size(min = 8 , max = 255 , message = "test test")
     private String firstName;
 
     @NotEmpty(message = "Last Name is required")
-    @Size(min = 3 , max = 64, message="Last Name Must be at least 3 characters")
+    @Size(min = 8 , max = 255 , message = "test test")
     private String lastName;
 
     @NotEmpty(message = "Email is required")
     @Email(message = "Email is invalid")
     private String email;
 
-    @NotEmpty(message = "Password is required")
-    @Size(min = 8 , max = 64 , message="Password must be at least 8 characters")
+    @NotEmpty(message="password can not be empty!")
+    @Size(min = 8 , max = 255 , message = "test test")
     private String password;
 
-    @NotEmpty(message = "Confirm password is required")
-    @Size(min = 8 , max = 64 , message="Confirm password must be at least 8 characters")
+    @Transient
+    @NotEmpty(message="confirm password can not be empty!")
+    @Size(min = 8 , max = 255 , message = "test test")
     private String confirm_password;
 
     @Column(updatable = false)
