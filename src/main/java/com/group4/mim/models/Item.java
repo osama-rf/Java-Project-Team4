@@ -14,6 +14,21 @@ public class Item {
     public Item() {
     }
 
+    public Item(String name_en, String name_ar, String description_en, String description_ar,
+                double price, double discountPrice, String promo_ar, String promo_en, String image, User user, Category category){
+        this.name_en=name_en;
+        this.name_ar=name_ar;
+        this.description_en=description_en;
+        this.description_ar=description_ar;
+        this.price=price;
+        this.discountPrice=discountPrice;
+        this.promo_ar=promo_ar;
+        this.promo_en=promo_en;
+        this.image=image;
+        this.user=user;
+        this.category=category;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
