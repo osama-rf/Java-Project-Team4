@@ -1,6 +1,7 @@
 package com.group4.mim.services;
 
 import com.group4.mim.models.Menu;
+import com.group4.mim.models.User;
 import com.group4.mim.repositories.MenuRepository;
 import org.apache.commons.lang3.RandomStringUtils;
 
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -75,5 +77,13 @@ public class MenuService {
         if(menu.isPresent()){
             menuRepository.delete(menu.get());
         }
+    }
+
+    public List<Menu> allMenusByUser(User user){
+        return menuRepository.findByUserLike(user);
+    }
+
+    public long countAll(User user){
+        return menuRepository.countByUserLike(user);
     }
 }

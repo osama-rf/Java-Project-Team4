@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 @Controller
 public class UserController {
@@ -41,13 +42,14 @@ public class UserController {
 
     @PostMapping("/register")
     public String Register(
-            @ModelAttribute("register") User register,
+            @Valid @ModelAttribute("register") User register,
             BindingResult result,
             RedirectAttributes attr,
             HttpSession session
     ){
         User user = userService.register(register,result);
         if(result.hasErrors()){
+            attr.addFlashAttribute("errors",result.getFieldErrors());
             return "redirect:/home";
         }else{
             session.setAttribute("user_id",user.getId());
@@ -57,14 +59,14 @@ public class UserController {
 
     @PostMapping("/login")
     public String login(
-            @ModelAttribute("login") Login login,
+            @Valid @ModelAttribute("login") Login login,
             BindingResult result,
             RedirectAttributes attr,
             HttpSession session
     ){
         User user = userService.login(login,result);
         if(result.hasErrors()){
-
+            attr.addFlashAttribute("errors",result.getFieldErrors());
             return "redirect:/home";
         }else{
             session.setAttribute("user_id",user.getId());
@@ -76,6 +78,9 @@ public class UserController {
     public String logout(
             HttpSession session
     ) {
+        if(session.getAttribute("user_id") == null){
+            return "redirect:/";
+        }
         session.removeAttribute("user_id");
         return "redirect:/";
 

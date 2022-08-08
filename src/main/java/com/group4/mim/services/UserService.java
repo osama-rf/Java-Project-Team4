@@ -43,10 +43,10 @@ public class UserService {
     ){
         Optional<User> user = userRepository.findByEmail(login.getEmail());
         if(!user.isPresent()){
-            result.addError(new FieldError("login","login","Email or password is incorrect"));
+            result.addError(new FieldError("email","email","Email or password is incorrect"));
         }else{
             if(!BCrypt.checkpw(login.getPassword() , user.get().getPassword())){
-                result.addError(new FieldError("login","login","Email or password is incorrect"));
+                result.addError(new FieldError("password","password","Email or password is incorrect"));
             }else{
                 if(!result.hasErrors()){
                     return user.get();

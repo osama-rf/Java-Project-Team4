@@ -269,7 +269,7 @@
               </c:choose>
             </h3>
             <h4 class="display-4">
-              <i class="fas fa-pencil-alt"></i> 6
+              <i class="fas fa-pencil-alt"></i> <c:out value="${countMenus}"/>
             </h4>
             <a href="posts.html" class="btn btn-outline-light btn-sm">
               <c:choose>
@@ -295,7 +295,7 @@
               </c:otherwise>
             </c:choose></h3>
             <h4 class="display-4">
-              <i class="fas fa-folder"></i> 4
+              <i class="fas fa-folder"></i> <c:out value="${countCategories}"/>
             </h4>
             <a href="categories.html" class="btn btn-outline-light btn-sm"> <c:choose>
               <c:when test="${lang.equalsIgnoreCase('en')}">
@@ -361,33 +361,105 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header bg-warning text-white">
-        <h5 class="modal-title">Add Menu</h5>
+        <h5 class="modal-title">
+          <c:choose>
+            <c:when test="${lang.equalsIgnoreCase('en')}">
+              Add Menu
+            </c:when>
+            <c:otherwise>
+              اضافة قائمة طعام
+            </c:otherwise>
+          </c:choose>
+        </h5>
         <button class="close" data-dismiss="modal">
           <span>&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="form-control">
+        <form:form action="/dashboard/menu/create" method="POST" enctype="multipart/form-data" modelAttribute="menu">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="brandName_en" class="<c:if test="${lang.equalsIgnoreCase('ar')}">float-right</c:if> ">
+                  <c:choose>
+                    <c:when test="${lang.equalsIgnoreCase('en')}">
+                      Brand Name in English
+                    </c:when>
+                    <c:otherwise>
+                      اسم البراند بالانجليزي
+                    </c:otherwise>
+                  </c:choose>
+                </label>
+                <input name="brandName_en" id="brandName_en" class="form-control" />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="brandName_ar" class="<c:if test="${lang.equalsIgnoreCase('ar')}">float-right</c:if> ">
+                  <c:choose>
+                    <c:when test="${lang.equalsIgnoreCase('en')}">
+                      Brand Name in Arabic
+                    </c:when>
+                    <c:otherwise>
+                      اسم البراند بالعربي
+                    </c:otherwise>
+                  </c:choose>
+                </label>
+                <input name="brandName_ar" id="brandName_ar" class="form-control" />
+              </div>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" class="form-control">
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="background" class="<c:if test="${lang.equalsIgnoreCase('ar')}">float-right</c:if> ">
+                  <c:choose>
+                    <c:when test="${lang.equalsIgnoreCase('en')}">
+                      Menu Background
+                    </c:when>
+                    <c:otherwise>
+                      خلفية قائمة الطعام
+                    </c:otherwise>
+                  </c:choose>
+                </label>
+                <input type="file" name="background_image" id="background" class="form-control" />
+                <input type="hidden" name="background" value="no image">
+              </div>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control">
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="brandLogo" class="<c:if test="${lang.equalsIgnoreCase('ar')}">float-right</c:if> ">
+                  <c:choose>
+                    <c:when test="${lang.equalsIgnoreCase('en')}">
+                      Brand Logo
+                    </c:when>
+                    <c:otherwise>
+                      شعار البراند
+                    </c:otherwise>
+                  </c:choose>
+                </label>
+                <input type="file" name="brand_Logo" id="brandLogo" class="form-control" />
+                <input type="hidden" name="brandLogo" value="no image">
+              </div>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="password2">Confirm Password</label>
-            <input type="password" class="form-control">
+          <div class="row">
+            <div class="col-12">
+              <button class="btn btn-warning" type="submit">
+                <c:choose>
+                  <c:when test="${lang.equalsIgnoreCase('en')}">
+                    Add
+                  </c:when>
+                  <c:otherwise>
+                   اضافة
+                  </c:otherwise>
+                </c:choose>
+              </button>
+            </div>
           </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-warning" data-dismiss="modal">Save Changes</button>
+        </form:form>
       </div>
     </div>
   </div>
@@ -450,15 +522,72 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="title">Title</label>
-            <input type="text" class="form-control">
+        <form:form action="/dashboard/category/create" method="POST" modelAttribute="category">
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <form:select class="form-control" path="menu">
+                  <c:forEach var="menu" items="${menus}">
+                    <form:option value="${menu.id}">
+                      <c:choose>
+                        <c:when test="${lang.equalsIgnoreCase('en')}">
+                          <c:out value="${menu.brandName_en}"/>
+                        </c:when>
+                        <c:otherwise>
+                          <c:out value="${menu.brandName_ar}"/>
+                        </c:otherwise>
+                      </c:choose>
+                    </form:option>
+                  </c:forEach>
+                </form:select>
+              </div>
+            </div>
           </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-success" data-dismiss="modal">Save Changes</button>
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="name_en" class="<c:if test="${lang.equalsIgnoreCase('ar')}">float-right</c:if>">
+                  <c:choose>
+                    <c:when test="${lang.equalsIgnoreCase('en')}">
+                      Category Name in English
+                    </c:when>
+                    <c:otherwise>
+                      اسم التصنيف بالانجليزي
+                    </c:otherwise>
+                  </c:choose>
+                </label>
+                <form:input path="name_en" class="form-control"/>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="name_ar" class="<c:if test="${lang.equalsIgnoreCase('ar')}">float-right</c:if>">
+                  <c:choose>
+                    <c:when test="${lang.equalsIgnoreCase('en')}">
+                      Category Name in Arabic
+                    </c:when>
+                    <c:otherwise>
+                      اسم التصنيف بالعربي
+                    </c:otherwise>
+                  </c:choose>
+                </label>
+                <form:input path="name_ar" class="form-control"/>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-success">
+            <c:choose>
+              <c:when test="${lang.equalsIgnoreCase('en')}">
+                ADD
+              </c:when>
+              <c:otherwise>
+                اضافة
+              </c:otherwise>
+            </c:choose>
+          </button>
+        </form:form>
       </div>
     </div>
   </div>

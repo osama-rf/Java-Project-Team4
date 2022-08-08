@@ -16,6 +16,14 @@ public class Menu {
     public Menu() {
     }
 
+    public Menu(String brandName_ar, String brandName_en, String background, String brandLogo, User user) {
+        this.brandName_ar = brandName_ar;
+        this.brandName_en = brandName_en;
+        this.background = background;
+        this.brandLogo = brandLogo;
+        this.user = user;
+    }
+
     @Id
     @GeneratedValue
     private long id;

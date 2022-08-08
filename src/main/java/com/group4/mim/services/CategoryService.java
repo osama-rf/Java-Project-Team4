@@ -1,6 +1,7 @@
 package com.group4.mim.services;
 
 import com.group4.mim.models.Category;
+import com.group4.mim.models.User;
 import com.group4.mim.repositories.CategoryRepository;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +44,10 @@ public class CategoryService {
         if(category.isPresent()){
            categoryRepository.delete(category.get());
         }
+    }
+
+    public long countAll(long user_id){
+        return categoryRepository.countAllCategories(user_id);
     }
 
 

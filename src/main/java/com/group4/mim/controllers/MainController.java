@@ -19,24 +19,10 @@ public class MainController {
         return "redirect:/home";
     }
 
-    @RequestMapping(value = "/dashboard",method = RequestMethod.GET)
-    public String dashboard(
-            Model model,
-            HttpSession session
-    ){
-        model.addAttribute("lang",
-                (String) session.getAttribute("lang")
-        );
-        return "dashboard/index.jsp";
-    }
-
-
-
-
     @RequestMapping(value = "/home",method = RequestMethod.GET)
     public String Home(
-            @ModelAttribute("login") Login login,
-            @ModelAttribute("register") User register,
+            @ModelAttribute("login_form") Login login,
+            @ModelAttribute("register_form") User register,
             Model model,
             HttpSession session
     ){

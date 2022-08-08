@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
@@ -21,24 +22,25 @@ public class User {
     private long id;
 
     @NotEmpty(message = "First Name is required")
-    @Size(min = 8 , max = 255 , message = "test test")
+    @Pattern(regexp = "^[a-zA-Z]*" , message = "First Name has to be letters only")
+    @Size(min = 3,message = "First Name must be at least 3 characters")
     private String firstName;
 
     @NotEmpty(message = "Last Name is required")
-    @Size(min = 8 , max = 255 , message = "test test")
+    @Size(min = 3,message = "First Name must be at least 3 characters")
     private String lastName;
 
     @NotEmpty(message = "Email is required")
     @Email(message = "Email is invalid")
     private String email;
 
-    @NotEmpty(message="password can not be empty!")
-    @Size(min = 8 , max = 255 , message = "test test")
+    @NotEmpty(message = "Password is required")
+    @Size(min = 8,message = "Password must be at least 8 characters")
     private String password;
 
     @Transient
-    @NotEmpty(message="confirm password can not be empty!")
-    @Size(min = 8 , max = 255 , message = "test test")
+    @NotEmpty(message = "Confirm password is required")
+    @Size(min = 8,message = "Confirm password must be at least 8 characters and Match the password")
     private String confirm_password;
 
     @Column(updatable = false)
