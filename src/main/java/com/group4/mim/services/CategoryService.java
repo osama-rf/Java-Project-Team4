@@ -1,11 +1,13 @@
 package com.group4.mim.services;
 
 import com.group4.mim.models.Category;
+import com.group4.mim.models.Menu;
 import com.group4.mim.models.User;
 import com.group4.mim.repositories.CategoryRepository;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -48,6 +50,10 @@ public class CategoryService {
 
     public long countAll(long user_id){
         return categoryRepository.countAllCategories(user_id);
+    }
+
+    public List<Object> getCategories(long menu){
+        return categoryRepository.getCategories(menu);
     }
 
 

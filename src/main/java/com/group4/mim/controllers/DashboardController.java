@@ -4,10 +4,9 @@ import com.group4.mim.models.Category;
 import com.group4.mim.models.Item;
 import com.group4.mim.models.Menu;
 import com.group4.mim.models.User;
-import com.group4.mim.services.CategoryService;
-import com.group4.mim.services.ItemService;
-import com.group4.mim.services.MenuService;
-import com.group4.mim.services.UserService;
+import com.group4.mim.services.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class DashboardController {
@@ -26,10 +26,12 @@ public class DashboardController {
     private final CategoryService categoryService;
     private final ItemService itemService;
 
+
     public DashboardController(UserService userService,
                                MenuService menuService,
                                CategoryService categoryService,
-                               ItemService itemService){
+                               ItemService itemService
+    ){
 
         this.userService = userService;
         this.menuService = menuService;
@@ -41,6 +43,7 @@ public class DashboardController {
     public String dashboard(
             @ModelAttribute("menu") Menu menu,
             @ModelAttribute("category") Category category,
+            @ModelAttribute("item") Item item,
             BindingResult result,
             Model model,
             HttpSession session
@@ -54,6 +57,7 @@ public class DashboardController {
         model.addAttribute("countMenus",menuService.countAll(user));
         model.addAttribute("countCategories",categoryService.countAll(user.getId()));
         model.addAttribute("menus",menuService.allMenusByUser(user));
+        model.addAttribute("user",user);
         return "dashboard/index.jsp";
     }
 
@@ -107,7 +111,7 @@ public class DashboardController {
     public String createItem(
             @Valid @ModelAttribute("item")Item item,
             RedirectAttributes attr,
-            @RequestParam(value = "item_image") MultipartFile image,
+            @RequestParam(value = "product_image") MultipartFile image,
             BindingResult result,
             HttpSession session
         ) {
@@ -119,7 +123,18 @@ public class DashboardController {
             attr.addFlashAttribute("errors", result.getFieldErrors());
             return "redirect:/dashboard";
         }
+        item.setImage(itemService.uploadImage(image));
         itemService.createItem(item);
         return "redirect:/dashboard";
+    }
+
+    //=========================API=============================//
+
+    @RequestMapping (value = "/api/getCategories/{menu_id}/{user_id}",method = RequestMethod.GET ,produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody List<Object> getCategories(
+            @PathVariable(value = "menu_id") long menu_id,
+            @PathVariable(value = "user_id") long user_id
+    ){
+        return categoryService.getCategories(menu_id);
     }
 }

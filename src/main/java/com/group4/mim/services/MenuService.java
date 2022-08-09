@@ -83,6 +83,15 @@ public class MenuService {
         return menuRepository.findByUserLike(user);
     }
 
+    public Menu findMenu(long id){
+        Optional<Menu> menu = menuRepository.findById(id);
+        if(menu.isPresent()){
+            return menu.get();
+        }else{
+            return null;
+        }
+    }
+
     public long countAll(User user){
         return menuRepository.countByUserLike(user);
     }

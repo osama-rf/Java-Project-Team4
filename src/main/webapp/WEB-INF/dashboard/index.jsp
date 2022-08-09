@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page isErrorPage="true" %>
+<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html dir=
@@ -40,20 +41,8 @@
           <a href="/dashboard/" class="nav-link active">
             <c:choose>
               <c:when test="${lang.equalsIgnoreCase('en')}">
-                Dashboard
+                Menus
               </c:when>
-              <c:otherwise>
-                لوحة التحكم
-              </c:otherwise>
-            </c:choose>
-          </a>
-        </li>
-        <li class="nav-item px-2">
-          <a href="/dashboard/menus" class="nav-link">
-            <c:choose>
-                <c:when test="${lang.equalsIgnoreCase('en')}">
-                  Menus
-                </c:when>
               <c:otherwise>
                 قوائم الطعام
               </c:otherwise>
@@ -206,10 +195,10 @@
             <h4>
               <c:choose>
                 <c:when test="${lang.equalsIgnoreCase('en')}">
-                  Last Added
+                  Menus
                 </c:when>
                 <c:otherwise>
-                  اخر الاضافات
+                  قوائم الطعام
                 </c:otherwise>
               </c:choose>
             </h4>
@@ -231,10 +220,10 @@
               <th>
                 <c:choose>
                   <c:when test="${lang.equalsIgnoreCase('en')}">
-                    Type
+                    Categories
                   </c:when>
                   <c:otherwise>
-                    النوع
+                    الأصناف
                   </c:otherwise>
                 </c:choose>
               </th>
@@ -250,7 +239,27 @@
             </tr>
             </thead>
             <tbody>
-
+            <c:forEach var="menu" items="${menus}">
+              <tr>
+                <td><c:out value="${menu.id}"/></td>
+                <td>
+                  <c:choose>
+                    <c:when test="${lang.equalsIgnoreCase('en')}">
+                      <c:out value="${menu.brandName_en}"/>
+                    </c:when>
+                    <c:otherwise>
+                      <c:out value="${menu.brandName_ar}"/>
+                    </c:otherwise>
+                  </c:choose>
+                </td>
+                <td>
+                  <c:out value="${menu.categories.size()}"/>
+                </td>
+                <td>
+                  <f:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${menu.createdAt}"/>
+                </td>
+              </tr>
+            </c:forEach>
             </tbody>
           </table>
         </div>
@@ -465,58 +474,22 @@
   </div>
 </div>
 
-<!-- ADD Item MODAL -->
-<div class="modal fade" id="addItemModal">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header bg-primary text-white">
-        <h5 class="modal-title">Add Item</h5>
-        <button class="close" data-dismiss="modal">
-          <span>&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="title">Items Name</label>
-            <input type="text" class="form-control">
-          </div>
-          <div class="form-group">
-            <label for="category">Category</label>
-            <select class="form-control">
-              <option value="">Web Development</option>
-              <option value="">Tech Gadgets</option>
-              <option value="">Business</option>
-              <option value="">Health & Wellness</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="image">Upload Image</label>
-            <div class="custom-file">
-              <input type="file" class="custom-file-input" id="image">
-              <label for="image" class="custom-file-label">Choose File</label>
-            </div>
-            <small class="form-text text-muted">Max Size 3mb</small>
-          </div>
-          <div class="form-group">
-            <label for="body">Body</label>
-            <textarea name="editor1" class="form-control"></textarea>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-primary" data-dismiss="modal">Save Changes</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- ADD CATEGORY MODAL -->
 <div class="modal fade" id="addCategoryModal">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header bg-success text-white">
-        <h5 class="modal-title">Add Category</h5>
+        <h5 class="modal-title">
+          <c:choose>
+            <c:when test="${lang.equalsIgnoreCase('en')}">
+              Add Item
+            </c:when>
+            <c:otherwise>
+              اضافة منتج
+            </c:otherwise>
+          </c:choose>
+        </h5>
         <button class="close" data-dismiss="modal">
           <span>&times;</span>
         </button>
@@ -593,6 +566,244 @@
   </div>
 </div>
 
+<!-- ADD Item MODAL -->
+<div class="modal fade" id="addItemModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title">
+          <c:choose>
+            <c:when test="${lang.equalsIgnoreCase('en')}">
+              Add Item
+            </c:when>
+            <c:otherwise>
+              اضافة منتج
+            </c:otherwise>
+          </c:choose>
+        </h5>
+        <button class="close" data-dismiss="modal">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form:form action="/dashboard/item/create" method="POST" modelAttribute="item" enctype="multipart/form-data">
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group mb-3">
+                <label for="menu_id" class="<c:if test="${lang.equalsIgnoreCase('ar')}">float-right</c:if>">
+                  <c:choose>
+                    <c:when test="${lang.equalsIgnoreCase('en')}">
+                      Choose Menu
+                    </c:when>
+                    <c:otherwise>
+                      اختر قائمة طعام
+                    </c:otherwise>
+                  </c:choose>
+                </label>
+                <select onchange="getCategories(this,${user.id})" id="menu_id" class="form-control">
+                  <option value="" selected>...</option>
+                  <c:forEach var="menu" items="${menus}">
+                    <option value="${menu.id}">
+                      <c:choose>
+                        <c:when test="${lang.equalsIgnoreCase('en')}">
+                          <c:out value="${menu.brandName_en}"/>
+                        </c:when>
+                        <c:otherwise>
+                          <c:out value="${menu.brandName_ar}"/>
+                        </c:otherwise>
+                      </c:choose>
+                    </option>
+                  </c:forEach>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group mb-3">
+                <label for="categories" class="<c:if test="${lang.equalsIgnoreCase('ar')}">float-right</c:if> ">
+                  <c:choose>
+                    <c:when test="${lang.equalsIgnoreCase('en')}">
+                      Select Category
+                    </c:when>
+                    <c:otherwise>
+                      اختر تصنيف
+                    </c:otherwise>
+                  </c:choose>
+                </label>
+                <select name="categories" id="categories" class="form-control" multiple></select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <div class="form-group">
+                <label for="name_en" class="<c:if test="${lang.equalsIgnoreCase('ar')}">float-right</c:if>">
+                  <c:choose>
+                    <c:when test="${lang.equalsIgnoreCase('en')}">
+                      Product Name in English
+                    </c:when>
+                    <c:otherwise>
+                      اسم المنتج بالانجليزي
+                    </c:otherwise>
+                  </c:choose>
+                </label>
+                <form:input class="form-control" path="name_en"/>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label for="name_en" class="<c:if test="${lang.equalsIgnoreCase('ar')}">float-right</c:if>">
+                  <c:choose>
+                    <c:when test="${lang.equalsIgnoreCase('en')}">
+                      Product Name in Arabic
+                    </c:when>
+                    <c:otherwise>
+                      اسم المنتج بالعربي
+                    </c:otherwise>
+                  </c:choose>
+                </label>
+                <form:input class="form-control" path="name_ar"/>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <div class="form-group">
+                <label for="description_en" class="<c:if test="${lang.equalsIgnoreCase('ar')}">float-right</c:if>">
+                  <c:choose>
+                    <c:when test="${lang.equalsIgnoreCase('en')}">
+                      Description Name in English
+                    </c:when>
+                    <c:otherwise>
+                      وصف المنتج بالانجليزي
+                    </c:otherwise>
+                  </c:choose>
+                </label>
+                <form:textarea class="form-control" path="description_en"/>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label for="description_ar" class="<c:if test="${lang.equalsIgnoreCase('ar')}">float-right</c:if>">
+                  <c:choose>
+                    <c:when test="${lang.equalsIgnoreCase('en')}">
+                      Description Name in Arabic
+                    </c:when>
+                    <c:otherwise>
+                      وصف المنتج بالعربي
+                    </c:otherwise>
+                  </c:choose>
+                </label>
+                <form:textarea class="form-control" path="description_ar"/>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <div class="form-group">
+                <label for="price" class="<c:if test="${lang.equalsIgnoreCase('ar')}">float-right</c:if>">
+                  <c:choose>
+                    <c:when test="${lang.equalsIgnoreCase('en')}">
+                      Product Price
+                    </c:when>
+                    <c:otherwise>
+                     سعر المنتج
+                    </c:otherwise>
+                  </c:choose>
+                </label>
+                <form:input type="Number" class="form-control" path="price"/>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label for="discountPrice" class="<c:if test="${lang.equalsIgnoreCase('ar')}">float-right</c:if>">
+                  <c:choose>
+                    <c:when test="${lang.equalsIgnoreCase('en')}">
+                      Discount price ( if any )
+                    </c:when>
+                    <c:otherwise>
+                      سعر المنتج بعد الخصم ( إن وجد )
+                    </c:otherwise>
+                  </c:choose>
+                </label>
+                <form:input class="form-control" path="discountPrice"/>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <div class="form-group">
+                <label for="promo_en" class="<c:if test="${lang.equalsIgnoreCase('ar')}">float-right</c:if>">
+                  <c:choose>
+                    <c:when test="${lang.equalsIgnoreCase('en')}">
+                      Product Promo in English ( if any )
+                    </c:when>
+                    <c:otherwise>
+                      العرض الترويجي بالانجليزي ( إن وجد )
+                    </c:otherwise>
+                  </c:choose>
+                </label>
+                <form:input class="form-control" path="promo_en"/>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label for="promo_ar" class="<c:if test="${lang.equalsIgnoreCase('ar')}">float-right</c:if>">
+                  <c:choose>
+                    <c:when test="${lang.equalsIgnoreCase('en')}">
+                      Product Promo in Arabic ( if any )
+                    </c:when>
+                    <c:otherwise>
+                      العرض الترويجي بالعربي ( إن وجد )
+                    </c:otherwise>
+                  </c:choose>
+                </label>
+                <form:input class="form-control" path="promo_ar"/>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="product_image" class="<c:if test="${lang.equalsIgnoreCase('ar')}">float-right</c:if> ">
+                  <c:choose>
+                    <c:when test="${lang.equalsIgnoreCase('en')}">
+                     Product Image
+                    </c:when>
+                    <c:otherwise>
+                      صورة المنتج
+                    </c:otherwise>
+                  </c:choose>
+                </label>
+                <input type="file" name="product_image" id="product_image" class="form-control" />
+                <input type="hidden" name="image" value="no image">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <button type="submit" class="btn btn-success">
+                  <c:choose>
+                    <c:when test="${lang.equalsIgnoreCase('en')}">
+                      ADD
+                    </c:when>
+                    <c:otherwise>
+                      اضافة
+                    </c:otherwise>
+                  </c:choose>
+                </button>
+              </div>
+            </div>
+          </div>
+        </form:form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 
 
@@ -609,6 +820,31 @@
   $('#year').text(new Date().getFullYear());
 
   CKEDITOR.replace('editor1');
+
+
+  function getCategories(element,user_id){
+    let menu_id = element.value;
+    $.ajax({
+      url: "/api/getCategories/"+ menu_id + "/" + user_id,
+      type: "GET",
+      dataType:"json",
+      success: function(response){
+        let options = "";
+        response.forEach(function(ele,index){
+          options += "<option value='" + ele[0] + "'" + ">" +
+                  <c:choose>
+                    <c:when test="${lang.equalsIgnoreCase('en')}">
+                      ele[1]
+                    </c:when>
+                    <c:otherwise>
+                      ele[2]
+                    </c:otherwise>
+                  </c:choose>
+                  + "</option>";
+        });
+        document.getElementById("categories").innerHTML = options;
+      }});
+  }
 </script>
 </body>
 
