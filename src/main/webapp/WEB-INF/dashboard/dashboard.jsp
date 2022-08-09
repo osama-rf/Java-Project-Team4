@@ -38,7 +38,7 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav">
         <li class="nav-item px-2">
-          <a href="/dashboard/" class="nav-link active">
+          <a href="/dashboard" class="nav-link active">
             <c:choose>
               <c:when test="${lang.equalsIgnoreCase('en')}">
                 Menus
@@ -192,7 +192,7 @@
       <div class="col-md-9">
         <div class="card">
           <div class="card-header">
-            <h4>
+            <h4 class="<c:if test="${lang.equalsIgnoreCase('ar')}"> float-right </c:if>">
               <c:choose>
                 <c:when test="${lang.equalsIgnoreCase('en')}">
                   Menus
@@ -282,7 +282,7 @@
             <h4 class="display-4">
               <i class="fas fa-pencil-alt"></i> <c:out value="${countMenus}"/>
             </h4>
-            <a href="posts.html" class="btn btn-outline-light btn-sm">
+            <a href="/dashboard" class="btn btn-outline-light btn-sm">
               <c:choose>
                 <c:when test="${lang.equalsIgnoreCase('en')}">
                   View
@@ -308,7 +308,7 @@
             <h4 class="display-4">
               <i class="fas fa-folder"></i> <c:out value="${countCategories}"/>
             </h4>
-            <a href="categories.html" class="btn btn-outline-light btn-sm"> <c:choose>
+            <a href="/dashboard/categories" class="btn btn-outline-light btn-sm"> <c:choose>
               <c:when test="${lang.equalsIgnoreCase('en')}">
                 View
               </c:when>
@@ -330,9 +330,9 @@
               </c:otherwise>
             </c:choose></h3>
             <h4 class="display-4">
-              <i class="fas fa-users"></i> 4
+              <i class="fas fa-users"></i> <c:out value="${countItems}"/>
             </h4>
-            <a href="users.html" class="btn btn-outline-light btn-sm">
+            <a href="/dashboard/items" class="btn btn-outline-light btn-sm">
               <c:choose>
                 <c:when test="${lang.equalsIgnoreCase('en')}">
                   View
@@ -633,7 +633,7 @@
                     </c:otherwise>
                   </c:choose>
                 </label>
-                <select name="categories" id="categories" class="form-control" multiple></select>
+                <select name="categories" id="categories" class="form-control" multiple required></select>
               </div>
             </div>
           </div>
@@ -820,8 +820,6 @@
 <script>
   // Get the current year for the copyright
   $('#year').text(new Date().getFullYear());
-
-  CKEDITOR.replace('editor1');
 
 
   function getCategories(element,user_id){

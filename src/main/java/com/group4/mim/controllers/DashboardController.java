@@ -5,7 +5,6 @@ import com.group4.mim.models.Item;
 import com.group4.mim.models.Menu;
 import com.group4.mim.models.User;
 import com.group4.mim.services.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,9 +55,48 @@ public class DashboardController {
         );
         model.addAttribute("countMenus",menuService.countAll(user));
         model.addAttribute("countCategories",categoryService.countAll(user.getId()));
+        model.addAttribute("countItems",itemService.countAll(user.getId()));
         model.addAttribute("menus",menuService.allMenusByUser(user));
         model.addAttribute("user",user);
-        return "dashboard/index.jsp";
+        return "dashboard/dashboard.jsp";
+    }
+
+    @RequestMapping(value = "/dashboard/categories",method = RequestMethod.GET)
+    public String categories(
+            Model model,
+            HttpSession session
+    ){
+        model.addAttribute("lang",
+                (String) session.getAttribute("lang")
+        );
+        User user = userService.findUser(
+                (long) session.getAttribute("user_id")
+        );
+        model.addAttribute("countMenus",menuService.countAll(user));
+        model.addAttribute("countCategories",categoryService.countAll(user.getId()));
+        model.addAttribute("countItems",itemService.countAll(user.getId()));
+        model.addAttribute("categories",categoryService.findAllCategoriesForUser(user.getId()));
+        model.addAttribute("user",user);
+        return "dashboard/menus.jsp";
+    }
+
+    @RequestMapping(value = "/dashboard/items",method = RequestMethod.GET)
+    public String items(
+            Model model,
+            HttpSession session
+    ){
+        model.addAttribute("lang",
+                (String) session.getAttribute("lang")
+        );
+        User user = userService.findUser(
+                (long) session.getAttribute("user_id")
+        );
+        model.addAttribute("countMenus",menuService.countAll(user));
+        model.addAttribute("countCategories",categoryService.countAll(user.getId()));
+        model.addAttribute("countItems",itemService.countAll(user.getId()));
+        model.addAttribute("items",itemService.findAllItemsForUser(user.getId()));
+        model.addAttribute("user",user);
+        return "dashboard/items.jsp";
     }
 
     //====================Menu=============================//

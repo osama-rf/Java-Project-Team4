@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -66,16 +67,25 @@ public class ItemService {
         }else{
             try {
 
-                String path = request.getServletContext().getRealPath("/uploads/items/");
+                String path = request.getServletContext().getRealPath("/resources/static/uploads/items/");
                 String date = new SimpleDateFormat("yyyy-MM-dd:hh:mm:ss").format(new Date());
                 String random = RandomStringUtils.random(10,true,false);
                 String filename = date + random + ".jpg";
+                String databasefilename = String.format("uploads/items/%s",filename);
                 String filePath = path + filename;
                 multipartFile.transferTo(new File(filePath));
-                return filePath;
+                return databasefilename;
             }catch (Exception e){
                 return null;
             }
         }
+    }
+
+    public long countAll(long user_id){
+        return itemRepository.countAllItems(user_id);
+    }
+
+    public List<Item> findAllItemsForUser(long user_id){
+        return itemRepository.findAllItemsForUser(user_id);
     }
 }

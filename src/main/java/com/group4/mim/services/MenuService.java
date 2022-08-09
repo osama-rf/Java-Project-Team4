@@ -26,6 +26,10 @@ public class MenuService {
         this.request = request;
     }
 
+    public List<Menu> allMenus(){
+        return menuRepository.findAll();
+    }
+
     public Menu showMenu(long id){
         Optional<Menu> menu = menuRepository.findById(id);
         if(menu.isPresent()){
@@ -45,13 +49,14 @@ public class MenuService {
         }else{
             try {
 
-                String path = request.getServletContext().getRealPath(String.format("/uploads/%s/",dir));
+                String path = request.getServletContext().getRealPath(String.format("/resources/static/uploads/%s/",dir));
                 String date = new SimpleDateFormat("yyyy-MM-dd:hh:mm:ss").format(new Date());
                 String random = RandomStringUtils.random(10,true,false);
                 String filename = date + random + ".jpg";
+                String databasefilename = String.format("uploads/%s/%s",dir,filename);
                 String filePath = path + filename;
                 multipartFile.transferTo(new File(filePath));
-                return filePath;
+                return databasefilename;
             }catch (Exception e){
                 return null;
             }

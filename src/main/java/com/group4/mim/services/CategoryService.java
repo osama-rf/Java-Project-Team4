@@ -56,5 +56,9 @@ public class CategoryService {
         return categoryRepository.getCategories(menu);
     }
 
+    public List<Category> findAllCategoriesForUser(long user_id){
+        return categoryRepository.findAllCategoriesForUser(user_id);
+    }
+
 
 }

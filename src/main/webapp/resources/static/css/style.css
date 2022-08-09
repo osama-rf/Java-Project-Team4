@@ -4,7 +4,7 @@ body {
 }
 
 .navbar {
-  border-bottom: #008ed6 3px solid;
+  border-bottom: #9e6b42 3px solid;
   opacity: 0.8;
 }
 
@@ -31,20 +31,39 @@ body {
 
 #home-section .card-form {
   opacity: 0.8;
+  background:  #9e6b42;
 }
 
 #home-section .fas,
 #create-section .fas {
-  color: #008ed6;
+  color: #9e6b42;
   background: #fff;
   padding: 5px;
   border-radius: 5px;
 }
 
-#explore-section .fas,
+#dashboard-section .fas,
 #share-section .fas {
   background: #333;
   color: #fff;
   padding: 5px;
   border-radius: 5px;
 }
+
+#our_menus .row {
+  overflow: auto;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+#our_menus .row .col-6,
+#our_menus .row .col-md-4{
+  display: inline-block;
+}
+
+.menus {
+  border: #9e6b42 3px solid;
+  background: rgba(86, 62, 44, 0.45);
+}
+
+
