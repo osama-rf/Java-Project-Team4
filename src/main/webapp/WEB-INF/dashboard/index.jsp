@@ -203,6 +203,8 @@
               </c:choose>
             </h4>
           </div>
+
+
           <table class="table table-striped">
             <thead class="thead-dark">
             <tr>
