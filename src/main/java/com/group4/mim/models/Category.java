@@ -39,7 +39,7 @@ public class Category {
     @JoinColumn(name = "menu_id")
     private Menu menu;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinTable(
             name = "categories_items",
             joinColumns = @JoinColumn(name = "category_id"),

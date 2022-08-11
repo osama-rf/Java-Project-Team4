@@ -19,7 +19,6 @@ public interface CategoryRepository extends CrudRepository <Category, Long> {
     List<Object> getCategories(long menu);
 
 
-
     @Query(value= "select count(c.id) from categories c , users u , menus m" +
             " where c.menu_id = m.id and m.user_id = u.id and u.id = ?1" ,nativeQuery = true)
     long countAllCategories(long user_id);

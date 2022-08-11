@@ -26,4 +26,24 @@ public class LanguageController {
         session.setAttribute("lang","ar");
         return "redirect:/"+location;
     }
+
+    @GetMapping("/language/{location}/{menu_id}/en")
+    public String setLangEn2(
+            HttpSession session,
+            @PathVariable(value = "location") String location,
+            @PathVariable(value = "menu_id") long menu_id
+    ){
+        session.setAttribute("lang","En");
+        return "redirect:/"+location+"/"+menu_id;
+    }
+
+    @GetMapping("/language/{location}/{menu_id}/ar")
+    public String setLangAr2(
+            HttpSession session,
+            @PathVariable(value = "location") String location,
+            @PathVariable(value = "menu_id") long menu_id
+    ){
+        session.setAttribute("lang","ar");
+        return "redirect:/"+location+"/"+menu_id;
+    }
 }

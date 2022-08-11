@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 public interface MenuRepository extends CrudRepository <Menu, Long> {
     List<Menu> findAll();
+    List<Menu> findTop6ByOrderByCreatedAtAsc();
     List<Menu> findByUserLike(User user);
     long countByUserLike(User user);
 }

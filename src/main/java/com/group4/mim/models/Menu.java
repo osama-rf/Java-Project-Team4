@@ -56,6 +56,9 @@ public class Menu {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToMany(mappedBy = "menu",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<Item> items;
+
     @OneToMany(mappedBy = "menu",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Category> categories;
 
@@ -128,7 +131,11 @@ public class Menu {
         this.categories = categories;
     }
 
+    public List<Item> getItems() {
+        return items;
+    }
 
-
-
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
 }

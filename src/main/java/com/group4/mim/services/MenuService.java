@@ -100,4 +100,8 @@ public class MenuService {
     public long countAll(User user){
         return menuRepository.countByUserLike(user);
     }
+
+    public List<Menu> Top6(){
+        return menuRepository.findTop6ByOrderByCreatedAtAsc();
+    }
 }

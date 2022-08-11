@@ -247,10 +247,14 @@
                 <td>
                   <c:choose>
                     <c:when test="${lang.equalsIgnoreCase('en')}">
-                      <c:out value="${menu.brandName_en}"/>
+                      <a href="/menu/${menu.id}">
+                          <c:out value="${menu.brandName_en}"/>
+                      </a>
                     </c:when>
                     <c:otherwise>
-                      <c:out value="${menu.brandName_ar}"/>
+                      <a href="/menu/${menu.id}">
+                          <c:out value="${menu.brandName_ar}"/>
+                      </a>
                     </c:otherwise>
                   </c:choose>
                 </td>
@@ -602,7 +606,7 @@
                     </c:otherwise>
                   </c:choose>
                 </label>
-                <select onchange="getCategories(this,${user.id})" id="menu_id" class="form-control">
+                <select onchange="getCategories(this,${user.id})" id="menu_id" name="menu" class="form-control" required>
                   <option value="" selected>...</option>
                   <c:forEach var="menu" items="${menus}">
                     <option value="${menu.id}">

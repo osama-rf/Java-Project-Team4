@@ -47,6 +47,9 @@ public class DashboardController {
             Model model,
             HttpSession session
     ){
+        if(!isLogin(session)){
+            return "redirect:/";
+        }
         model.addAttribute("lang",
                 (String) session.getAttribute("lang")
         );
@@ -66,6 +69,9 @@ public class DashboardController {
             Model model,
             HttpSession session
     ){
+        if(!isLogin(session)){
+            return "redirect:/";
+        }
         model.addAttribute("lang",
                 (String) session.getAttribute("lang")
         );
@@ -77,7 +83,7 @@ public class DashboardController {
         model.addAttribute("countItems",itemService.countAll(user.getId()));
         model.addAttribute("categories",categoryService.findAllCategoriesForUser(user.getId()));
         model.addAttribute("user",user);
-        return "dashboard/menus.jsp";
+        return "dashboard/categories.jsp";
     }
 
     @RequestMapping(value = "/dashboard/items",method = RequestMethod.GET)
@@ -85,6 +91,9 @@ public class DashboardController {
             Model model,
             HttpSession session
     ){
+        if(!isLogin(session)){
+            return "redirect:/";
+        }
         model.addAttribute("lang",
                 (String) session.getAttribute("lang")
         );
@@ -109,6 +118,9 @@ public class DashboardController {
             BindingResult result,
             HttpSession session
     ){
+        if(!isLogin(session)){
+            return "redirect:/";
+        }
         User user = userService.findUser(
                 (long) session.getAttribute("user_id")
         );
@@ -132,6 +144,9 @@ public class DashboardController {
             BindingResult result,
             HttpSession session
     ){
+        if(!isLogin(session)){
+            return "redirect:/";
+        }
         User user = userService.findUser(
                 (long) session.getAttribute("user_id")
         );
@@ -153,6 +168,9 @@ public class DashboardController {
             BindingResult result,
             HttpSession session
         ) {
+        if(!isLogin(session)){
+            return "redirect:/";
+        }
         User user = userService.findUser(
                 (long) session.getAttribute("user_id")
         );
@@ -173,6 +191,20 @@ public class DashboardController {
             @PathVariable(value = "menu_id") long menu_id,
             @PathVariable(value = "user_id") long user_id
     ){
+        if(user_id != menuService.findMenu(menu_id).getUser().getId()){
+            return null;
+        }
         return categoryService.getCategories(menu_id);
     }
+
+
+    //=========================Helpers=============================//
+
+
+    public boolean isLogin(
+            HttpSession session
+    ){
+        return session.getAttribute("user_id") != null;
+    }
+
 }

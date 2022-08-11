@@ -19,6 +19,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
         crossorigin="anonymous">
@@ -495,18 +496,14 @@
 
 <section id="our_menus">
   <div class="container text-center">
-    <div class="row p-5">
-      <c:forEach var="menu" items="${menus}">
-        <div class="col-md-4 d-none d-md-inline-block">
-          <div class="card menus text-center">
-            <div class="card-body">
-              <img src="${menu.brandLogo}" width="100px" height="100px" class="mb-3">
-              <h5>${menu.brandName_en}</h5>
-              <h5>${menu.brandName_ar}</h5>
-            </div>
-          </div>
-        </div>
-      </c:forEach>
+    <div class="row">
+      <div class="container">
+        <section class="logo-carousel slider" data-arrows="true">
+          <c:forEach var="menu" items="${ourMenus}">
+            <div class="slide p-2"><img height="100" width="100" src="../${menu.brandLogo}"></div>
+          </c:forEach>
+        </section>
+      </div>
     </div>
   </div>
 </section>
@@ -534,7 +531,43 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
         crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
 <script>
+
+  // Toastify({
+  //
+  //   text: "This is a toast",
+  //   style:{
+  //     background:"red",
+  //   },
+  //
+  //   duration: 3000,
+  //
+  //
+  // }).showToast();
+
+  $(document).ready(function() {
+    $('.logo-carousel').slick({
+      slidesToShow: 6,
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 1000,
+      arrows: true,
+      dots: false,
+      pauseOnHover: false,
+      responsive: [{
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 4
+        }
+      }, {
+        breakpoint: 520,
+        settings: {
+          slidesToShow: 2
+        }
+      }]
+    });
+  });
   // Get the current year for the copyright
   $('#year').text(new Date().getFullYear());
 

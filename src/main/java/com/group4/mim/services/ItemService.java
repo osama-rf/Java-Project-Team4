@@ -1,6 +1,7 @@
 package com.group4.mim.services;
 
 import com.group4.mim.models.Item;
+import com.group4.mim.models.Menu;
 import com.group4.mim.repositories.ItemRepository;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Service;
@@ -69,7 +70,7 @@ public class ItemService {
 
                 String path = request.getServletContext().getRealPath("/resources/static/uploads/items/");
                 String date = new SimpleDateFormat("yyyy-MM-dd:hh:mm:ss").format(new Date());
-                String random = RandomStringUtils.random(10,true,false);
+                    String random = RandomStringUtils.random(10,true,false);
                 String filename = date + random + ".jpg";
                 String databasefilename = String.format("uploads/items/%s",filename);
                 String filePath = path + filename;
@@ -87,5 +88,9 @@ public class ItemService {
 
     public List<Item> findAllItemsForUser(long user_id){
         return itemRepository.findAllItemsForUser(user_id);
+    }
+
+    public List<Item> findAllItemsForMenus(Menu menu){
+        return itemRepository.findByMenuLike(menu);
     }
 }
