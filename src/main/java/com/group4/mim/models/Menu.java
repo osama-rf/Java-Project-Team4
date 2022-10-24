@@ -16,13 +16,6 @@ public class Menu {
     public Menu() {
     }
 
-    public Menu(String brandName_ar, String brandName_en, String background, String brandLogo, User user) {
-        this.brandName_ar = brandName_ar;
-        this.brandName_en = brandName_en;
-        this.background = background;
-        this.brandLogo = brandLogo;
-        this.user = user;
-    }
 
     @Id
     @GeneratedValue
@@ -36,13 +29,19 @@ public class Menu {
     @Size(min = 2 , max = 64 , message = "Brand name must be at least 2 characters")
     private String brandName_en;
 
-    @NotEmpty(message = "Background is Required")
-    private String background;
 
-    @NotEmpty(message = "Logo is Required")
-    @NotNull(message = "Logo can not be null")
-    @Column(length = 400)
-    private String brandLogo;
+    @Lob
+    private String brandLogo_path;
+
+    @Lob
+    private byte[] brandLogo;
+
+    @Lob
+    private String background_path;
+
+    @Lob
+    private byte[] background;
+
 
     @Column(updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd:hh:mm:ss")
@@ -88,21 +87,6 @@ public class Menu {
         this.brandName_en = brandName_en;
     }
 
-    public String getBackground() {
-        return background;
-    }
-
-    public void setBackground(String background) {
-        this.background = background;
-    }
-
-    public String getBrandLogo() {
-        return brandLogo;
-    }
-
-    public void setBrandLogo(String brandLogo) {
-        this.brandLogo = brandLogo;
-    }
 
     public User getUser() {
         return user;
@@ -137,5 +121,37 @@ public class Menu {
 
     public void setItems(List<Item> items) {
         this.items = items;
+    }
+
+    public String getBrandLogo_path() {
+        return brandLogo_path;
+    }
+
+    public void setBrandLogo_path(String brandLogo_path) {
+        this.brandLogo_path = brandLogo_path;
+    }
+
+    public byte[] getBrandLogo() {
+        return brandLogo;
+    }
+
+    public void setBrandLogo(byte[] brandLogo) {
+        this.brandLogo = brandLogo;
+    }
+
+    public String getBackground_path() {
+        return background_path;
+    }
+
+    public void setBackground_path(String background_path) {
+        this.background_path = background_path;
+    }
+
+    public byte[] getBackground() {
+        return background;
+    }
+
+    public void setBackground(byte[] background) {
+        this.background = background;
     }
 }

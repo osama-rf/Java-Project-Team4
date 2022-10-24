@@ -500,7 +500,7 @@
       <div class="container">
         <section class="logo-carousel slider" data-arrows="true">
           <c:forEach var="menu" items="${ourMenus}">
-            <div class="slide p-2"><img height="100" width="100" src="../${menu.brandLogo}"></div>
+            <div class="slide p-2"><img height="100" width="100" src="data:image/jpg;base64,${menu.brandLogo_path}"></div>
           </c:forEach>
         </section>
       </div>

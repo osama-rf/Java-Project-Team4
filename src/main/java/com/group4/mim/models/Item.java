@@ -43,8 +43,11 @@ public class Item {
     @Column(nullable = true)
     private String promo_ar;
 
-    @NotEmpty(message = "Image is required")
-    private String image;
+    @Lob
+    private byte[] image;
+
+    @Lob
+    private String  image_path;
 
     @Column(updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd:hh:mm:ss")
@@ -147,13 +150,6 @@ public class Item {
         this.discountPrice = discountPrice;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
 
     public long getId() {
         return id;
@@ -189,5 +185,21 @@ public class Item {
 
     public void setMenu(Menu menu) {
         this.menu = menu;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public String getImage_path() {
+        return image_path;
+    }
+
+    public void setImage_path(String image_path) {
+        this.image_path = image_path;
     }
 }

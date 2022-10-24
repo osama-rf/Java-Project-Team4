@@ -438,7 +438,7 @@
                   </c:choose>
                 </label>
                 <input type="file" name="background_image" id="background" class="form-control" />
-                <input type="hidden" name="background" value="no image">
+                <input type="hidden" name="background_path" value="no image">
               </div>
             </div>
           </div>
@@ -456,7 +456,7 @@
                   </c:choose>
                 </label>
                 <input type="file" name="brand_Logo" id="brandLogo" class="form-control" />
-                <input type="hidden" name="brandLogo" value="no image">
+                <input type="hidden" name="brandLogo_path" value="no image">
               </div>
             </div>
           </div>

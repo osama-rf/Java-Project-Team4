@@ -35,7 +35,7 @@
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top" id="main-nav">
     <div class="container">
         <a href="/" class="navbar-brand">
-            <img src="../${menu.brandLogo}" width="50" height="50" class="rounded-circle">
+            <img src="data:image/jpg;base64,${menu.brandLogo_path}" width="50" height="50" class="rounded-circle">
             <c:choose>
                 <c:when test="${lang.equalsIgnoreCase('en')}">
                     ${menu.brandName_en}
@@ -80,7 +80,7 @@
     </div>
 </nav>
 
-<section style="background: url('../${menu.background}')" id="body">
+<section style="background: url('data:image/jpg;base64,${menu.background_path}')" id="body">
     <div class="row">
         <div class="col-12">
             <div class="container tabs showItems rounded p-2 mt-4">
@@ -178,7 +178,7 @@
                                                         </h6>
                                                     </div>
                                                 </div>
-                                                <img src="../${item.image}" alt="Generic placeholder image" height="200" width="200" class="ml-lg-2 order-1 order-lg-1 align-self-center mb-3">
+                                                <img src="data:image/jpg;base64,${item.image_path}" alt="Generic placeholder image" height="200" width="200" class="ml-lg-2 order-1 order-lg-1 align-self-center mb-3">
                                             </div> <!-- End -->
                                         </li> <!-- End -->
                                     </c:forEach>
@@ -248,7 +248,7 @@
                                                             </h6>
                                                         </div>
                                                     </div>
-                                                    <img src="../${item.image}" alt="Generic placeholder image" height="200" width="200" class="ml-lg-5 order-1 order-lg-1 mb-3 align-self-center">
+                                                    <img src="data:image/jpg;base64,${item.image_path}" alt="Generic placeholder image" height="200" width="200" class="ml-lg-5 order-1 order-lg-1 mb-3 align-self-center">
                                                 </div> <!-- End -->
                                             </li> <!-- End -->
                                         </c:forEach>

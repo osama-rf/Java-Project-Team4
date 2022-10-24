@@ -15,6 +15,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 
 @Controller
@@ -111,13 +113,13 @@ public class DashboardController {
     //====================Menu=============================//
     @PostMapping("/dashboard/menu/create")
     public String createMenu(
-            @Valid @ModelAttribute("menu") Menu menu,
             @RequestParam(value = "background_image") MultipartFile background,
             @RequestParam(value = "brand_Logo") MultipartFile brandLogo,
-            RedirectAttributes attr,
+            @Valid @ModelAttribute("menu") Menu menu,
             BindingResult result,
+            RedirectAttributes attr,
             HttpSession session
-    ){
+    ) throws IOException {
         if(!isLogin(session)){
             return "redirect:/";
         }
@@ -129,9 +131,13 @@ public class DashboardController {
             attr.addFlashAttribute("errors",result.getFieldErrors());
             return "redirect:/dashboard";
         }
+        String brandLogo_path = Base64.getEncoder().encodeToString(brandLogo.getBytes());
+        String background_path = Base64.getEncoder().encodeToString(background.getBytes());
         menu.setUser(user);
-        menu.setBrandLogo(menuService.uploadTo("logos",brandLogo));
-        menu.setBackground(menuService.uploadTo("backgrounds",background));
+        menu.setBrandLogo(brandLogo.getBytes());
+        menu.setBackground_path(background_path);
+        menu.setBrandLogo_path(brandLogo_path);
+        menu.setBackground(background.getBytes());
         menuService.createMenu(menu);
         return "redirect:/dashboard";
     }
@@ -140,8 +146,8 @@ public class DashboardController {
     @PostMapping("/dashboard/category/create")
     public String createCategory(
             @Valid @ModelAttribute("category")Category category,
-            RedirectAttributes attr,
             BindingResult result,
+            RedirectAttributes attr,
             HttpSession session
     ){
         if(!isLogin(session)){
@@ -162,12 +168,12 @@ public class DashboardController {
     //====================Items=============================//
     @PostMapping("/dashboard/item/create")
     public String createItem(
-            @Valid @ModelAttribute("item")Item item,
-            RedirectAttributes attr,
             @RequestParam(value = "product_image") MultipartFile image,
+            @Valid @ModelAttribute("item")Item item,
             BindingResult result,
+            RedirectAttributes attr,
             HttpSession session
-        ) {
+        ) throws IOException {
         if(!isLogin(session)){
             return "redirect:/";
         }
@@ -179,7 +185,10 @@ public class DashboardController {
             attr.addFlashAttribute("errors", result.getFieldErrors());
             return "redirect:/dashboard";
         }
-        item.setImage(itemService.uploadImage(image));
+
+        String image_path = Base64.getEncoder().encodeToString(image.getBytes());
+        item.setImage_path(image_path);
+        item.setImage(image.getBytes());
         itemService.createItem(item);
         return "redirect:/dashboard";
     }
